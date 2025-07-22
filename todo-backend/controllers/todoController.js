@@ -19,3 +19,23 @@ exports.createTodo = async (req, res) => {
         res.status(500).json({ message: "Görev oluşturulamadi.", eror: err.message });
     }
 };
+
+exports.deleteTodo = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const todo = await Todo.findById(id);
+
+        if (todo) {
+            return res.status(404).json({ message: "Görev bulunamadi." });
+        }
+
+        if (todo.userId.toString() !== req.user.id) {
+            return res.status(403).json({ message: "Yetkisiz." });
+        }
+
+        await todo.remove();
+        res.json({ message: "Görev silindi." });
+    } catch(err) {
+        res.status(500).json({ message: "Silme hatasi.", error: err.mesage });
+    }
+};
