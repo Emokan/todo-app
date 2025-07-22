@@ -47,3 +47,14 @@ export const getTodos = async (token) => {
     const data = await response.json();
     return { ok: response.ok, data };
 };
+
+export const deleteTodo = async (id, token) => {
+    const response = await fetch(`${API_BASE}/todos/${id}`,{
+        method: "DELETE",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    const data = await response.json();
+    return { ok: response.ok, data };
+};
