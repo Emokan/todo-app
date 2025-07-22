@@ -1,0 +1,23 @@
+1.📦 Geliştirme Önerisi
+Giriş başarılı olduğunda, kullanıcıya sadece mesaj göstermek yerine:
+
+Token'ı localStorage'a kaydedebilirsin.
+
+Bir yönlendirme (örneğin: todo listesine yönlendirme) yapabilirsin.
+
+2.🔧 Geliştirme Önerileri (şimdilik bilgi amaçlı)
+Kayıt başarılıysa:
+
+Token’ı localStorage’a kaydetmek
+
+Otomatik olarak login sayfasına veya todo listesine yönlendirme
+
+E-posta ve şifre için basit validasyon (örneğin min. karakter uzunluğu)
+
+🔐 JWT token’ı localStorage’a kaydetme
+
+✅ Giriş yapan kullanıcıya özel içerik gösterme
+
+📝 Todo bileşenlerini ekleme ve gösterme
+
+🚪 Çıkış (logout) fonksiyonelliği ekleme
