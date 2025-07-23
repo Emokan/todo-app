@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react";
 import CreateTodo from "./CreateTodo";
 import { getTodos, deleteTodo } from "../api";
 
+
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
   const [message, setMessage] = useState("");
+  const [editingId, setEditingId] = useState(null);
+  const [editinText, setEditingText] = useState("");
 
   const fetchTodos = async () => {
     const token = localStorage.getItem("token");
@@ -44,6 +47,23 @@ const TodoList = () => {
     }
   };
 
+  const handleUpdate = async (id) => {
+    const token = localStorage.getItem("token");
+    try {
+      const { ok, data } = await updateTodo(id, editingText, token);
+      if (ok) {
+        setMessage("✅ Görev güncellendi.");
+        setEditingId(null);
+        fetchTodos();
+      }else {
+        setMessage(`❌ ${data.message}`);
+      }
+    }catch (err) {
+      console.error("Güncelleme hatasi:", err);
+      setMessage("❌ Görev güncellenirken bir hata oluştu.");
+    }
+  };
+
   useEffect(() => {
     fetchTodos();
   }, []);
@@ -54,18 +74,34 @@ const TodoList = () => {
       <CreateTodo onTodoCreated={fetchTodos} />
       <p>{message}</p>
       <ul>
-        {todos.map((todo) => (
-          <li key={todo._id}>
-            {todo.text}
-            <button
-              onClick={() => handleDelete(todo._id)}
-              style={{ marginLeft: "10px" }}
-            >
-              Sil
-            </button>
-          </li>
-        ))}
-      </ul>
+      {todos.map((todo) => (
+        <li key={todo._id}>
+          {editingId === todo._id ? (
+            <>
+              <input
+                type="text"
+                value={editingText}
+                onChange={(e) => setEditingText(e.target.value)}
+              />
+              <button onClick={() => handleUpdate(todo._id)}>Kaydet</button>
+              <button onClick={() => setEditingId(null)}>İptal</button>
+            </>
+          ) : (
+            <>
+              {todo.text}
+              <button onClick={() => {
+                setEditingId(todo._id);
+                setEditingText(todo.text);
+              }}>
+                Düzenle
+              </button>
+              <button onClick={() => handleDelete(todo._id)}>Sil</button>
+            </>
+          )}
+        </li>
+      ))}
+</ul>
+
     </div>
   );
 };
