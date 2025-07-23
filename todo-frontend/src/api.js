@@ -58,3 +58,16 @@ export const deleteTodo = async (id, token) => {
     const data = await response.json();
     return { ok: response.ok, data };
 };
+
+export const updateTodo = async (İd, text, token) => {
+    const response = await fetch (`${API_BASE}/todos/${id}`,{
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ text }),
+    });
+    const data = await response.json();
+    return { ok: response.ok, data };
+};
