@@ -25,7 +25,7 @@ exports.deleteTodo = async (req, res) => {
     try {
         const todo = await Todo.findById(id);
 
-        if (todo) {
+        if (!todo) {
             return res.status(404).json({ message: "Görev bulunamadi." });
         }
 
@@ -36,7 +36,7 @@ exports.deleteTodo = async (req, res) => {
         await todo.remove();
         res.json({ message: "Görev silindi." });
     } catch(err) {
-        res.status(500).json({ message: "Silme hatasi.", error: err.mesage });
+        res.status(500).json({ message: "Silme hatasi.", error: err.message });
     }
 };
 

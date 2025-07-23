@@ -5,7 +5,7 @@ const { getTodos, createTodo, deleteTodo, updateTodo } = require("C:\\Users\\emi
 
 router.get("/", authMiddleware, getTodos);
 router.post("/", authMiddleware, createTodo);
-router.delete("/:id", authMiddleware, deleteTodo);
+router.delete("/:id", protect, deleteTodo);
 router.put("/:id", authMiddleware,updateTodo);
 
 module.exports = router;
