@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import CreateTodo from "./CreateTodo";
-import { getTodos, deleteTodo } from "../api";
+import { getTodos, deleteTodo, updateTodo } from "../api";
 
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
   const [message, setMessage] = useState("");
   const [editingId, setEditingId] = useState(null);
-  const [editinText, setEditingText] = useState("");
+  const [editingText, setEditingText] = useState("");
 
   const fetchTodos = async () => {
     const token = localStorage.getItem("token");

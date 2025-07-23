@@ -59,7 +59,7 @@ export const deleteTodo = async (id, token) => {
     return { ok: response.ok, data };
 };
 
-export const updateTodo = async (İd, text, token) => {
+export const updateTodo = async (id, text, token) => {
     const response = await fetch (`${API_BASE}/todos/${id}`,{
         method: "PUT",
         headers: {
