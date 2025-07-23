@@ -21,24 +21,28 @@ exports.createTodo = async (req, res) => {
 };
 
 exports.deleteTodo = async (req, res) => {
-    const { id } = req.params;
-    try {
-        const todo = await Todo.findById(id);
+  const { id } = req.params;
 
-        if (!todo) {
-            return res.status(404).json({ message: "Görev bulunamadi." });
-        }
+  try {
+    const todo = await Todo.findById(id);
 
-        if (todo.userId.toString() !== req.user.id) {
-            return res.status(403).json({ message: "Yetkisiz." });
-        }
-
-        await todo.remove();
-        res.json({ message: "Görev silindi." });
-    } catch(err) {
-        res.status(500).json({ message: "Silme hatasi.", error: err.message });
+    if (!todo) {
+      return res.status(404).json({ message: "Görev bulunamadi." });
     }
+
+    if (todo.userId.toString() !== req.user.id) {
+      return res.status(403).json({ message: "Yetkisiz." });
+    }
+
+    await todo.deleteOne();
+    res.json({ message: "Görev silindi." });
+
+  } catch (err) {
+    console.error("Silme hatası:", err); // burada konsola log düşecek
+    res.status(500).json({ message: "Silme hatasi.", error: err.message });
+  }
 };
+
 
 exports.updateTodo = async (req, res) => {
     const { id } = req.params;
